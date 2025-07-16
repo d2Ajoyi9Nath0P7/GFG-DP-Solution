@@ -1,0 +1,27 @@
+long long solve(int i,int j,int M,int N,vector<vector<long long>>&dp)
+{
+    if(i == M-1 && j == N-1)
+    {
+        return 1;
+    }
+    if(i >= M || j >= N)
+    {
+        return 0;
+    }
+
+    if(dp[i][j] != -1)
+    {
+        return dp[i][j];
+    }
+
+    long long down = solve(i+1,j,M,N,dp);
+    long long right = solve(i,j+1,M,N,dp);
+
+    return  dp[i][j] = (down + right) % 1000000007;
+}
+
+long long  numberOfPaths(int M, int N)
+{
+    vector<vector<long long>>dp(M+1,vector<long long>(N+1,-1));
+    return solve(0,0,M,N,dp);
+}
