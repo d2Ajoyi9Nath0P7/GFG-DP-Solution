@@ -1,0 +1,30 @@
+int solve(int index,int remain,vector<int>&val,vector<int>&wt,vector<vector<int>>&dp)
+{
+    if(index == val.size() || remain <= 0)
+    {
+        return 0;
+    }
+
+    if(dp[index][remain] != -1)
+    {
+        return dp[index][remain];
+    }
+
+    int not_take = 0 + solve(index+1,remain,val,wt,dp);
+    int take = INT_MIN;
+
+    if(remain - wt[index] >= 0)
+    {
+        take = val[index] + solve(index+1,remain - wt[index],val,wt,dp);
+    }
+
+    return dp[index][remain] = max(take,not_take);
+}
+
+int knapsack(int W, vector<int> &val, vector<int> &wt)
+{
+    int n = val.size();
+    vector<vector<int>>dp(n+1,vector<int>(W+1,-1));
+
+    return solve(0,W,val,wt,dp);
+}
