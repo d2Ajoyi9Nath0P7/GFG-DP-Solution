@@ -1,0 +1,22 @@
+int solve(int index,vector<int>&cost,vector<int>&dp)
+{
+    if(index >= cost.size())
+    {
+        return 0;
+    }
+    if(dp[index] != -1)
+    {
+        return dp[index];
+    }
+    int stepOne = solve(index+1,cost,dp) + cost[index];
+    int stepTwo = solve(index+2,cost,dp) + cost[index];
+
+    return dp[index] = min(stepOne,stepTwo);
+}
+
+int minCostClimbingStairs(vector<int>& cost)
+{
+    int n = cost.size();
+    vector<int>dp(n,-1);
+    return min(solve(0,cost,dp),solve(1,cost,dp));
+}
